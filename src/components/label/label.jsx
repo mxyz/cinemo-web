@@ -1,20 +1,14 @@
-import React, { ReactNode, forwardRef } from 'react';
+import PropTypes from 'prop-types';
+import { forwardRef } from 'react';
 
 import Box from '@mui/material/Box';
 import { useTheme } from '@mui/material/styles';
 
 import { StyledLabel } from './styles';
 
-interface LabelProps {
-  children?: ReactNode;
-  color?: 'default' | 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'error';
-  variant?: 'filled' | 'outlined' | 'ghost' | 'soft';
-  startIcon?: ReactNode;
-  endIcon?: ReactNode;
-  sx?: object;
-}
+// ----------------------------------------------------------------------
 
-const Label = forwardRef<HTMLSpanElement, LabelProps>(
+const Label = forwardRef(
   ({ children, color = 'default', variant = 'soft', startIcon, endIcon, sx, ...other }, ref) => {
     const theme = useTheme();
 
@@ -37,14 +31,31 @@ const Label = forwardRef<HTMLSpanElement, LabelProps>(
         theme={theme}
         {...other}
       >
-        {startIcon && <Box sx={{ mr: 0.75, ...iconStyles }}>{startIcon}</Box>}
+        {startIcon && <Box sx={{ mr: 0.75, ...iconStyles }}> {startIcon} </Box>}
 
         {children}
 
-        {endIcon && <Box sx={{ ml: 0.75, ...iconStyles }}>{endIcon}</Box>}
+        {endIcon && <Box sx={{ ml: 0.75, ...iconStyles }}> {endIcon} </Box>}
       </StyledLabel>
     );
   }
 );
+
+Label.propTypes = {
+  children: PropTypes.node,
+  endIcon: PropTypes.object,
+  startIcon: PropTypes.object,
+  sx: PropTypes.object,
+  variant: PropTypes.oneOf(['filled', 'outlined', 'ghost', 'soft']),
+  color: PropTypes.oneOf([
+    'default',
+    'primary',
+    'secondary',
+    'info',
+    'success',
+    'warning',
+    'error',
+  ]),
+};
 
 export default Label;

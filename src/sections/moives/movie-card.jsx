@@ -1,19 +1,16 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import Card from '@mui/material/Card';
-import Stack from '@mui/material/Stack';
+import IconButton from '@mui/material/IconButton';
 
-import { IMovie } from 'src/redux/movieSlice';
+import Iconify from '../../components/iconify/iconify';
 
 // ----------------------------------------------------------------------
 
-type IPropsMovieCard = IMovie;
-
-const MovieCard = (props: IPropsMovieCard) => {
-  const { posterImageUrl, titleEN } = props;
-  console.log('trt', titleEN);
+const MovieCard = ({ posterImageUrl, titleEN }) => {
   const renderImg = (
     <Box
       component="img"
@@ -32,18 +29,29 @@ const MovieCard = (props: IPropsMovieCard) => {
   return (
     <Card>
       <Box sx={{ pt: '100%', position: 'relative' }}>{renderImg}</Box>
-
-      <Stack spacing={2} sx={{ p: 3 }}>
+      <Box
+        sx={{
+          p: 3,
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        }}
+      >
         <Link color="inherit" underline="hover" variant="subtitle2" noWrap>
           {titleEN}
         </Link>
-
-        {/* <Stack direction="row" alignItems="center" justifyContent="space-between">
-           
-        </Stack> */}
-      </Stack>
+        <IconButton sx={{ width: '48px', height: '48px', mt: 0 }} onClick={() => undefined}>
+          <Iconify width={24} icon="mdi:heart-outline" />
+        </IconButton>
+      </Box>
     </Card>
   );
+};
+
+MovieCard.propTypes = {
+  posterImageUrl: PropTypes.string.isRequired,
+  titleEN: PropTypes.string.isRequired,
 };
 
 export default MovieCard;

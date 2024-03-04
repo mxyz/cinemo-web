@@ -1,21 +1,14 @@
-import React from 'react';
+import PropTypes from 'prop-types';
 
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
 
-import { IMovie } from 'src/redux/movieSlice';
-
 import MovieCard from '../movie-card';
 
 // ----------------------------------------------------------------------
 
-interface IPropsMoviesView {
-  movies: IMovie[];
-}
-
-const MoviesView = (props: IPropsMoviesView) => {
-  const { movies } = props;
+export default function MoviesView({ movies }) {
   return (
     <Container>
       <Typography variant="h4" sx={{ mb: 5 }}>
@@ -43,6 +36,8 @@ const MoviesView = (props: IPropsMoviesView) => {
       </Grid>
     </Container>
   );
-};
+}
 
-export default MoviesView;
+MoviesView.propTypes = {
+  movies: PropTypes.array.isRequired,
+};

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import PropTypes from 'prop-types';
+import { PropTypes } from 'prop-types';
 
 import Box from '@mui/material/Box';
 
@@ -25,7 +25,7 @@ export default function DashboardLayout({ children }) {
       >
         <Nav openNav={openNav} onCloseNav={() => setOpenNav(false)} />
 
-        <Main>{children}</Main>
+        <Main sx={undefined}>{children}</Main>
       </Box>
     </>
   );

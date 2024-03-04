@@ -2,7 +2,7 @@ import useAxios from 'axios-hooks';
 import { useDispatch } from 'react-redux';
 import { useMemo, useEffect } from 'react';
 
-import { IMovie, addMovies } from 'src/redux/movieSlice';
+import { addMovies } from '../redux/slices/movieSlice';
 
 const useGetMovies = () => {
   const dispatch = useDispatch();
@@ -11,7 +11,7 @@ const useGetMovies = () => {
     url: 'https://www.majorcineplex.com/apis/get_movie_avaiable',
   });
 
-  const moviesData: IMovie[] = useMemo(() => {
+  const moviesData = useMemo(() => {
     if (data?.movies) {
       return data.movies.map((movie) => ({
         id: movie.id.toString(),

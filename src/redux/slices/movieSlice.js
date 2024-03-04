@@ -1,31 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-export interface IMovie {
-  id: string;
-  titleEN: string;
-  titleTH: string;
-  synopsisEN: string;
-  synopsisTH: string;
-  genre: string;
-  actors: string;
-  director: string;
-  duration: number;
-  bannerImageUrl: string;
-  posterImageUrl: string;
-  favorited?: boolean;
-}
-
-interface MovieState {
-  movies: IMovie[];
-}
-
-const initialState: MovieState = {
-  movies: [],
-};
-
 export const MovieSlice = createSlice({
   name: 'movie',
-  initialState,
+  initialState: {
+    movies: [],
+  },
   reducers: {
     addMovies: (state, action) => {
       state.movies = action.payload;
