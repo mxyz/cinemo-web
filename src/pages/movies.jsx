@@ -3,9 +3,10 @@ import { useSelector } from 'react-redux';
 import { Helmet } from 'react-helmet-async';
 
 import useGetMovies from 'src/api/useGetMovies';
-import { getMovies } from 'src/redux/slices/movieSlice';
 
-import { MoviesView } from 'src/sections/moives/view';
+import { MoviesView } from 'src/sections/movies/view';
+
+import { getMovies } from 'src/redux/slices/movieSlice';
 
 export default function MoviesPage() {
   const movies = useSelector(getMovies);

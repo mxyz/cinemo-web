@@ -2,7 +2,8 @@ import useAxios from 'axios-hooks';
 import { useDispatch } from 'react-redux';
 import { useMemo, useEffect } from 'react';
 
-import { addMovies } from '../redux/slices/movieSlice';
+// eslint-disable-next-line import/no-unresolved
+import { addMovies } from 'src/redux/slices/movieSlice';
 
 const useGetMovies = () => {
   const dispatch = useDispatch();

@@ -7,14 +7,12 @@
   "plugins": [
     "perfectionist",
     "unused-imports",
-    "prettier",
-    "@typescript-eslint"
+    "prettier"
   ],
   "extends": [
     "airbnb",
     "airbnb/hooks",
-    "prettier",
-    "plugin:@typescript-eslint/recommended"
+    "prettier"
   ],
   "parserOptions": {
     "ecmaVersion": "latest",
@@ -38,9 +36,7 @@
         "extensions": [
           ".js",
           ".jsx",
-          ".json",
-          ".ts",
-          ".tsx"
+          ".json"
         ]
       }
     }
@@ -145,6 +141,7 @@
             "external"
           ],
           "custom-mui",
+          "custom-api",
           "custom-routes",
           "custom-hooks",
           "custom-utils",
@@ -152,6 +149,7 @@
           "custom-components",
           "custom-sections",
           "custom-types",
+          "custom-redux",
           [
             "parent",
             "sibling",
@@ -163,27 +161,19 @@
         "custom-groups": {
           "value": {
             "custom-mui": "@mui/**",
+            "custom-api": "src/api/**",
             "custom-routes": "src/routes/**",
             "custom-hooks": "src/hooks/**",
             "custom-utils": "src/utils/**",
             "custom-components": "src/components/**",
             "custom-sections": "src/sections/**",
-            "custom-types": "src/types/**"
+            "custom-types": "src/types/**",
+            "custom-redux": "src/redux/**"
           }
         },
         "internal-pattern": [
           "src/**"
         ]
-      }
-    ],
-    "import/extensions": [
-      "error",
-      "ignorePackages",
-      {
-        "js": "never",
-        "jsx": "never",
-        "ts": "never",
-        "tsx": "never"
       }
     ]
   }
