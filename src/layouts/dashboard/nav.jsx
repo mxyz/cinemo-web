@@ -2,8 +2,9 @@ import { useEffect } from 'react';
 import { PropTypes } from 'prop-types';
 
 import Box from '@mui/material/Box';
-import { Link } from '@mui/material';
+import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
 import Drawer from '@mui/material/Drawer';
 import Avatar from '@mui/material/Avatar';
 import { alpha } from '@mui/material/styles';
@@ -20,9 +21,10 @@ import Scrollbar from 'src/components/scrollbar';
 
 import { NAV } from './config-layout';
 import navConfig from './config-navigation';
+import Iconify from '../../components/iconify/iconify';
 
 // ----------------------------------------------------------------------
-export default function Nav({ openNav, onCloseNav, account }) {
+export default function Nav({ openNav, onCloseNav, isAuth, account, onLogout }) {
   const pathname = usePathname();
 
   const upLg = useResponsive('up', 'lg');
@@ -33,7 +35,7 @@ export default function Nav({ openNav, onCloseNav, account }) {
     }
   }, [pathname, openNav, onCloseNav]);
 
-  const renderAccount = account?.displayName ? (
+  const renderAccount = isAuth ? (
     <Box
       sx={{
         my: 3,
@@ -46,14 +48,10 @@ export default function Nav({ openNav, onCloseNav, account }) {
         bgcolor: (theme) => alpha(theme.palette.grey[500], 0.12),
       }}
     >
-      <Avatar src={account.photoURL} alt="photoURL" />
+      <Avatar src={account?.imageUrl} alt="photoURL" />
 
       <Box sx={{ ml: 2 }}>
         <Typography variant="subtitle2">{account.displayName}</Typography>
-
-        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-          {account}
-        </Typography>
       </Box>
     </Box>
   ) : (
@@ -70,7 +68,8 @@ export default function Nav({ openNav, onCloseNav, account }) {
           bgcolor: (theme) => alpha(theme.palette.grey[500], 0.12),
         }}
       >
-        <Box sx={{ ml: 2 }}>
+        <Box sx={{ display: 'flex', flexDirection: 'row' }}>
+          <Iconify sx={{ width: 24, height: 24, mr: 2 }} icon="ph:user-circle" />
           <Typography variant="subtitle2">Login</Typography>
         </Box>
       </Box>
@@ -88,21 +87,29 @@ export default function Nav({ openNav, onCloseNav, account }) {
   const renderContent = (
     <Scrollbar
       sx={{
-        height: 1,
+        height: '100%',
         '& .simplebar-content': {
-          height: 1,
+          height: '100%',
           display: 'flex',
           flexDirection: 'column',
         },
       }}
     >
-      <Logo sx={{ mt: 3, ml: 4 }} />
-
+      <Box sx={{ mt: 3, ml: 4 }}>
+        <Logo />
+      </Box>
       {renderAccount}
-
       {renderMenu}
-
-      <Box sx={{ flexGrow: 1 }} />
+      <Box flexGrow={1} />
+      {isAuth && (
+        <Button
+          sx={{ width: '100%', display: 'flex', height: 44 }}
+          color="error"
+          onClick={onLogout}
+        >
+          <Box component="span">Logout</Box>
+        </Button>
+      )}
     </Scrollbar>
   );
 
@@ -144,10 +151,13 @@ export default function Nav({ openNav, onCloseNav, account }) {
 Nav.propTypes = {
   openNav: PropTypes.bool,
   onCloseNav: PropTypes.func.isRequired,
+  isAuth: PropTypes.bool,
   account: PropTypes.shape({
-    photoURL: PropTypes.string.isRequired,
+    imageUrl: PropTypes.string,
     displayName: PropTypes.string.isRequired,
+    email: PropTypes.string,
   }),
+  onLogout: PropTypes.func.isRequired,
 };
 
 // ----------------------------------------------------------------------
