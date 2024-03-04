@@ -8,7 +8,7 @@ import MovieCard from '../movie-card';
 
 // ----------------------------------------------------------------------
 
-export default function MoviesView({ movies }) {
+export default function MoviesView({ movies, onToggleFavoriteMovieId }) {
   return (
     <Container>
       <Typography variant="h4" sx={{ mb: 5 }}>
@@ -30,6 +30,9 @@ export default function MoviesView({ movies }) {
               duration={movie.duration}
               bannerImageUrl={movie.bannerImageUrl}
               posterImageUrl={movie.posterImageUrl}
+              releaseDate={movie.releaseDate}
+              onClickFavorite={() => onToggleFavoriteMovieId(movie.id)}
+              favorited={movie.favorited}
             />
           </Grid>
         ))}
@@ -40,4 +43,5 @@ export default function MoviesView({ movies }) {
 
 MoviesView.propTypes = {
   movies: PropTypes.array.isRequired,
+  onToggleFavoriteMovieId: PropTypes.func.isRequired,
 };

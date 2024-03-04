@@ -1,44 +1,48 @@
 import useAxios from 'axios-hooks';
 import { useDispatch } from 'react-redux';
-import { useMemo, useEffect } from 'react';
+import {  useEffect, useCallback } from 'react';
 
-// eslint-disable-next-line import/no-unresolved
-import { addMovies } from 'src/redux/slices/movieSlice';
+import {addMovies } from 'src/redux/slices/movieSlice';
 
 const useGetMovies = () => {
+  const sessionFavoritedMovieIds = sessionStorage.getItem('favoritedMovieId');
   const dispatch = useDispatch();
+
+  console.log(sessionFavoritedMovieIds);
 
   const [{ data, loading }, refetch] = useAxios({
     url: 'https://www.majorcineplex.com/apis/get_movie_avaiable',
   });
 
-  const moviesData = useMemo(() => {
-    if (data?.movies) {
-      return data.movies.map((movie) => ({
+  const mappedMoviesData = useCallback((movies) => {
+    if (movies) {
+      return movies.map((movie) => ({
         id: movie.id.toString(),
         titleEN: movie.title_en,
         titleTH: movie.title_th,
         synopsisEN: movie.synopsis_en,
         synopsisTH: movie.synopsis_th,
-        genre: movie.genre,
+        genre: movie.genre.split('/'),
         actors: movie.actor,
         director: movie.director,
         duration: movie.duration,
         bannerImageUrl: movie.widescreen_url,
         posterImageUrl: movie.poster_url,
-        favorited: false,
+        releaseDate: movie.release_date,
+        favorited: sessionFavoritedMovieIds.includes(movie.id) || false,
       }));
     }
     return undefined;
-  }, [data]);
+  }, [sessionFavoritedMovieIds]);
 
   useEffect(() => {
-    if (moviesData) {
-      dispatch(addMovies(moviesData));
+    if (data) {
+      dispatch(addMovies(mappedMoviesData(data.movies)));
     }
-  }, [dispatch, moviesData]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data, dispatch]);
 
-  return { moviesData, loading, refetch };
+  return { loading, refetch };
 };
 
 export default useGetMovies;

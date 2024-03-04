@@ -33,7 +33,8 @@ export default function Nav({ openNav, onCloseNav, isAuth, account, onLogout }) 
     if (openNav) {
       onCloseNav();
     }
-  }, [pathname, openNav, onCloseNav]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathname]);
 
   const renderAccount = isAuth ? (
     <Box
@@ -154,7 +155,7 @@ Nav.propTypes = {
   isAuth: PropTypes.bool,
   account: PropTypes.shape({
     imageUrl: PropTypes.string,
-    displayName: PropTypes.string.isRequired,
+    displayName: PropTypes.string,
     email: PropTypes.string,
   }),
   onLogout: PropTypes.func.isRequired,

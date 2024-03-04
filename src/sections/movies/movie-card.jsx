@@ -2,48 +2,100 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Box from '@mui/material/Box';
-import Link from '@mui/material/Link';
 import Card from '@mui/material/Card';
+import Chip from '@mui/material/Chip';
+import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 
-import Iconify from '../../components/iconify/iconify';
+import { fDate } from 'src/utils/format-time';
+
+import Iconify from 'src/components/iconify/iconify';
 
 // ----------------------------------------------------------------------
 
-const MovieCard = ({ posterImageUrl, titleEN }) => {
+const MovieCard = ({
+  posterImageUrl,
+  titleEN,
+  genre,
+  duration,
+  releaseDate,
+  onClickFavorite,
+  favorited,
+}) => {
   const renderImg = (
     <Box
-      component="img"
-      alt={titleEN}
-      src={posterImageUrl}
       sx={{
-        top: 0,
-        width: 1,
-        height: 1,
-        objectFit: 'cover',
-        position: 'absolute',
+        position: 'relative',
+        width: '100%',
+        paddingTop: '148%',
+        overflow: 'hidden',
       }}
-    />
+    >
+      <img
+        alt={titleEN}
+        src={posterImageUrl}
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+        }}
+      />
+    </Box>
   );
 
   return (
-    <Card>
-      <Box sx={{ pt: '100%', position: 'relative' }}>{renderImg}</Box>
+    <Card
+      sx={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column' }}
+      onClick={onClickFavorite}
+    >
+      <Box sx={{ position: 'relative' }}>{renderImg}</Box>
+      <IconButton
+        sx={{
+          position: 'absolute',
+          top: 2,
+          right: 2,
+          width: '48px',
+          height: '48px',
+          mt: 0,
+          color: 'white',
+        }}
+        onClick={() => undefined}
+      >
+        <Iconify
+          width={24}
+          icon={favorited ? 'mdi:heart' : 'mdi:heart-outline'}
+          color={favorited ? '#d2aa5a' : 'inherit'}
+        />
+      </IconButton>
+      <Box
+        sx={{
+          p: 3,
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
+        <Typography variant="subtitle2" color="#d2aa5a">
+          {fDate(releaseDate)}
+        </Typography>
+        <Typography variant="h6">{titleEN}</Typography>
+      </Box>
       <Box
         sx={{
           p: 3,
           display: 'flex',
           flexDirection: 'row',
-          alignItems: 'center',
+          alignItems: 'flex-end',
           justifyContent: 'space-between',
+          marginTop: 'auto', // Pushes the box to the bottom
         }}
       >
-        <Link color="inherit" underline="hover" variant="subtitle2" noWrap>
-          {titleEN}
-        </Link>
-        <IconButton sx={{ width: '48px', height: '48px', mt: 0 }} onClick={() => undefined}>
-          <Iconify width={24} icon="mdi:heart-outline" />
-        </IconButton>
+        <Box sx={{ display: 'flex', gap: '4px' }}>
+          <Chip label={genre[0]} variant="outlined" />
+          <Chip label={`${duration} mins`} variant="outlined" />
+        </Box>
       </Box>
     </Card>
   );
@@ -52,6 +104,11 @@ const MovieCard = ({ posterImageUrl, titleEN }) => {
 MovieCard.propTypes = {
   posterImageUrl: PropTypes.string.isRequired,
   titleEN: PropTypes.string.isRequired,
+  genre: PropTypes.array,
+  duration: PropTypes.number,
+  releaseDate: PropTypes.string,
+  onClickFavorite: PropTypes.func,
+  favorited: PropTypes.func,
 };
 
 export default MovieCard;

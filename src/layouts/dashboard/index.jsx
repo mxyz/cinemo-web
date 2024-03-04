@@ -1,7 +1,9 @@
-import { useState } from 'react';
 import { PropTypes } from 'prop-types';
+import { useState, useCallback } from 'react';
 
 import Box from '@mui/material/Box';
+
+import { useRouter } from 'src/routes/hooks';
 
 import useAuth from 'src/hooks/useAuth';
 
@@ -13,11 +15,21 @@ import Header from './header';
 
 export default function DashboardLayout({ children }) {
   const { isAuth, account, onLogout } = useAuth();
-  const [openNav, setOpenNav] = useState(false);
 
+  const router = useRouter();
+  const [openNav, setOpenNav] = useState(false);
+  const onClickLogin = useCallback(() => {
+    router.push('/login');
+  }, [router]);
   return (
     <>
-      <Header onOpenNav={() => setOpenNav(true)} />
+      <Header
+        onOpenNav={() => setOpenNav(true)}
+        isAuth={isAuth}
+        account={account}
+        onLogout={onLogout}
+        onLogin={onClickLogin}
+      />
 
       <Box
         sx={{

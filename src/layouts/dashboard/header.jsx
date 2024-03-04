@@ -13,15 +13,12 @@ import { bgBlur } from 'src/theme/css';
 
 import Iconify from 'src/components/iconify';
 
-import Searchbar from './common/searchbar';
 import { NAV, HEADER } from './config-layout';
 import AccountPopover from './common/account-popover';
-import LanguagePopover from './common/language-popover';
-import NotificationsPopover from './common/notifications-popover';
 
 // ----------------------------------------------------------------------
 
-export default function Header({ onOpenNav }) {
+export default function Header({ onOpenNav, isAuth, account, onLogout, onLogin }) {
   const theme = useTheme();
 
   const lgUp = useResponsive('up', 'lg');
@@ -34,14 +31,10 @@ export default function Header({ onOpenNav }) {
         </IconButton>
       )}
 
-      <Searchbar />
-
       <Box sx={{ flexGrow: 1 }} />
 
       <Stack direction="row" alignItems="center" spacing={1}>
-        <LanguagePopover />
-        <NotificationsPopover />
-        <AccountPopover />
+        <AccountPopover isAuth={isAuth} account={account} onLogout={onLogout} onLogin={onLogin} />
       </Stack>
     </>
   );
@@ -78,4 +71,12 @@ export default function Header({ onOpenNav }) {
 
 Header.propTypes = {
   onOpenNav: PropTypes.func,
+  isAuth: PropTypes.bool,
+  account: PropTypes.shape({
+    imageUrl: PropTypes.string,
+    displayName: PropTypes.string,
+    email: PropTypes.string,
+  }),
+  onLogout: PropTypes.func.isRequired,
+  onLogin: PropTypes.func.isRequired,
 };
