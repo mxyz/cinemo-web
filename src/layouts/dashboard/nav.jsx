@@ -24,7 +24,7 @@ import navConfig from './config-navigation';
 import Iconify from '../../components/iconify/iconify';
 
 // ----------------------------------------------------------------------
-export default function Nav({ openNav, onCloseNav, isAuth, account, onLogout }) {
+export default function Nav({ openNav, onCloseNav, account, onLogout }) {
   const pathname = usePathname();
 
   const upLg = useResponsive('up', 'lg');
@@ -36,7 +36,7 @@ export default function Nav({ openNav, onCloseNav, isAuth, account, onLogout }) 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
-  const renderAccount = isAuth ? (
+  const renderAccount = account.displayName ? (
     <Box
       sx={{
         my: 3,
@@ -102,7 +102,7 @@ export default function Nav({ openNav, onCloseNav, isAuth, account, onLogout }) 
       {renderAccount}
       {renderMenu}
       <Box flexGrow={1} />
-      {isAuth && (
+      {account.displayName && (
         <Button
           sx={{ width: '100%', display: 'flex', height: 44 }}
           color="error"
@@ -152,7 +152,6 @@ export default function Nav({ openNav, onCloseNav, isAuth, account, onLogout }) 
 Nav.propTypes = {
   openNav: PropTypes.bool,
   onCloseNav: PropTypes.func.isRequired,
-  isAuth: PropTypes.bool,
   account: PropTypes.shape({
     imageUrl: PropTypes.string,
     displayName: PropTypes.string,

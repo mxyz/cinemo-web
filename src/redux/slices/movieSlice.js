@@ -1,10 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+
+// Check if there's any favorited movie IDs stored in sessionStorage
+const favoritedMovieIdsFromSessionStorage = JSON.parse(sessionStorage.getItem('favoritedMovieId')) || [];
+
 export const MovieSlice = createSlice({
   name: 'movie',
   initialState: {
     movies: [],
-    favorited: [],
+    favorited: favoritedMovieIdsFromSessionStorage || [],
   },
   reducers: {
     addMovies: (state, action) => {
@@ -15,21 +19,25 @@ export const MovieSlice = createSlice({
       
       // Find the movie in the movies array by its ID
       const movie = state.movies.find(_movie => _movie.id === payload);
-      console.log('dddddd');
       if (movie) {
         // Toggle the 'favorited' property of the movie
         movie.favorited = !movie.favorited;
     
         // Update the favorited list in sessionStorage
-        let newFavoritedList;
-        if (movie.favorited) {
-          newFavoritedList = Array.from(new Set([...state.favorited, payload]));
+        let favoritedListInStorage = sessionStorage.getItem('favoritedMovieId');
+        if (favoritedListInStorage) {
+          favoritedListInStorage = JSON.parse(favoritedListInStorage);
+          if (movie.favorited) {
+            favoritedListInStorage.push(payload);
+          } else {
+            favoritedListInStorage = favoritedListInStorage.filter(favoritedMovieId => favoritedMovieId !== payload);
+          }
         } else {
-          newFavoritedList = state.favorited.filter(favoritedMovieId => favoritedMovieId !== payload);
+          favoritedListInStorage = [payload];
         }
-        
-        state.favorited = newFavoritedList;
-        sessionStorage.setItem('favoritedMovieId', JSON.stringify(newFavoritedList));
+    
+        state.favorited = favoritedListInStorage;
+        sessionStorage.setItem('favoritedMovieId', JSON.stringify(favoritedListInStorage));
       }
     }
   }

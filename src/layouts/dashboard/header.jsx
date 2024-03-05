@@ -18,7 +18,7 @@ import AccountPopover from './common/account-popover';
 
 // ----------------------------------------------------------------------
 
-export default function Header({ onOpenNav, isAuth, account, onLogout, onLogin }) {
+export default function Header({ onOpenNav, account, onLogout, onLogin }) {
   const theme = useTheme();
 
   const lgUp = useResponsive('up', 'lg');
@@ -34,7 +34,7 @@ export default function Header({ onOpenNav, isAuth, account, onLogout, onLogin }
       <Box sx={{ flexGrow: 1 }} />
 
       <Stack direction="row" alignItems="center" spacing={1}>
-        <AccountPopover isAuth={isAuth} account={account} onLogout={onLogout} onLogin={onLogin} />
+        <AccountPopover account={account} onLogout={onLogout} onLogin={onLogin} />
       </Stack>
     </>
   );
@@ -71,7 +71,6 @@ export default function Header({ onOpenNav, isAuth, account, onLogout, onLogin }
 
 Header.propTypes = {
   onOpenNav: PropTypes.func,
-  isAuth: PropTypes.bool,
   account: PropTypes.shape({
     imageUrl: PropTypes.string,
     displayName: PropTypes.string,

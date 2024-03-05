@@ -12,10 +12,10 @@ import IconButton from '@mui/material/IconButton';
 
 // ----------------------------------------------------------------------
 
-export default function AccountPopover({ isAuth, account, onLogin, onLogout }) {
+export default function AccountPopover({ account, onLogin, onLogout }) {
   const [open, setOpen] = useState(null);
 
-  const handleOpen = useCallback((event) => {
+  const toggleOpen = useCallback((event) => {
     setOpen(event.currentTarget);
   }, []);
 
@@ -29,7 +29,7 @@ export default function AccountPopover({ isAuth, account, onLogin, onLogout }) {
   return (
     <>
       <IconButton
-        onClick={handleOpen}
+        onClick={toggleOpen}
         sx={{
           width: 40,
           height: 40,
@@ -56,7 +56,7 @@ export default function AccountPopover({ isAuth, account, onLogin, onLogout }) {
       <Popover
         open={!!open}
         anchorEl={open}
-        onClose={handleLogout}
+        onClose={() => toggleOpen({ currentTarget: false })}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
         PaperProps={{
@@ -68,7 +68,7 @@ export default function AccountPopover({ isAuth, account, onLogin, onLogout }) {
           },
         }}
       >
-        {isAuth && (
+        {account.displayName && (
           <>
             <Box sx={{ my: 1.5, px: 2 }}>
               <Typography variant="subtitle2" noWrap>
@@ -91,7 +91,7 @@ export default function AccountPopover({ isAuth, account, onLogin, onLogout }) {
             </MenuItem>
           </>
         )}
-        {!isAuth && (
+        {!account.displayName && (
           <MenuItem
             disableRipple
             disableTouchRipple
@@ -107,7 +107,6 @@ export default function AccountPopover({ isAuth, account, onLogin, onLogout }) {
 }
 
 AccountPopover.propTypes = {
-  isAuth: PropTypes.bool,
   account: PropTypes.shape({
     imageUrl: PropTypes.string,
     displayName: PropTypes.string,

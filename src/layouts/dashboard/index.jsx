@@ -1,4 +1,5 @@
 import { PropTypes } from 'prop-types';
+import { useSelector } from 'react-redux';
 import { useState, useCallback } from 'react';
 
 import Box from '@mui/material/Box';
@@ -7,6 +8,8 @@ import { useRouter } from 'src/routes/hooks';
 
 import useAuth from 'src/hooks/useAuth';
 
+import { getAccount } from 'src/redux/slices/accountSlice';
+
 import Nav from './nav';
 import Main from './main';
 import Header from './header';
@@ -14,8 +17,8 @@ import Header from './header';
 // ----------------------------------------------------------------------
 
 export default function DashboardLayout({ children }) {
-  const { isAuth, account, onLogout } = useAuth();
-
+  const { onLogout } = useAuth();
+  const account = useSelector(getAccount);
   const router = useRouter();
   const [openNav, setOpenNav] = useState(false);
   const onClickLogin = useCallback(() => {
@@ -25,7 +28,6 @@ export default function DashboardLayout({ children }) {
     <>
       <Header
         onOpenNav={() => setOpenNav(true)}
-        isAuth={isAuth}
         account={account}
         onLogout={onLogout}
         onLogin={onClickLogin}
@@ -41,7 +43,6 @@ export default function DashboardLayout({ children }) {
         <Nav
           openNav={openNav}
           onCloseNav={() => setOpenNav(false)}
-          isAuth={isAuth}
           account={account}
           onLogout={onLogout}
         />

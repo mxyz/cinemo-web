@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Chip from '@mui/material/Chip';
+import { useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 
@@ -22,6 +23,7 @@ const MovieCard = ({
   onClickFavorite,
   favorited,
 }) => {
+  const theme = useTheme();
   const renderImg = (
     <Box
       sx={{
@@ -47,10 +49,7 @@ const MovieCard = ({
   );
 
   return (
-    <Card
-      sx={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column' }}
-      onClick={onClickFavorite}
-    >
+    <Card sx={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column' }}>
       <Box sx={{ position: 'relative' }}>{renderImg}</Box>
       <IconButton
         sx={{
@@ -60,14 +59,13 @@ const MovieCard = ({
           width: '48px',
           height: '48px',
           mt: 0,
-          color: 'white',
         }}
-        onClick={() => undefined}
+        onClick={onClickFavorite}
       >
         <Iconify
-          width={24}
+          width={32}
           icon={favorited ? 'mdi:heart' : 'mdi:heart-outline'}
-          color={favorited ? '#d2aa5a' : 'inherit'}
+          color={favorited ? theme.palette.primary.main : 'white'}
         />
       </IconButton>
       <Box
@@ -77,7 +75,7 @@ const MovieCard = ({
           flexDirection: 'column',
         }}
       >
-        <Typography variant="subtitle2" color="#d2aa5a">
+        <Typography variant="subtitle2" color="primary">
           {fDate(releaseDate)}
         </Typography>
         <Typography variant="h6">{titleEN}</Typography>

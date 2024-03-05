@@ -1,11 +1,12 @@
 import useAxios from 'axios-hooks';
 import { useDispatch } from 'react-redux';
-import {  useEffect, useCallback } from 'react';
+import { useEffect, useCallback } from 'react';
 
-import {addMovies } from 'src/redux/slices/movieSlice';
+import { addMovies } from 'src/redux/slices/movieSlice';
 
 const useGetMovies = () => {
   const sessionFavoritedMovieIds = sessionStorage.getItem('favoritedMovieId');
+  console.log(sessionFavoritedMovieIds)
   const dispatch = useDispatch();
 
   console.log(sessionFavoritedMovieIds);
