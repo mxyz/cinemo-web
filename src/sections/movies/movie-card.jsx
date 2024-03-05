@@ -1,13 +1,14 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React, { useCallback } from 'react';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Chip from '@mui/material/Chip';
-import Link from '@mui/material/Link';
 import { useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
+
+import { useRouter } from 'src/routes/hooks';
 
 import { fDate } from 'src/utils/format-time';
 
@@ -26,6 +27,10 @@ const MovieCard = ({
   favorited,
 }) => {
   const theme = useTheme();
+  const router = useRouter();
+  const onMovieCardClick = useCallback(() => {
+    router.push(`/movie/${id}`);
+  }, [id, router]);
   const renderImg = (
     <Box
       sx={{
@@ -51,55 +56,59 @@ const MovieCard = ({
   );
 
   return (
-    <Link href={`/movie/${id}`} sx={{ textDecoration: 'none' }}>
-      <Card sx={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column' }}>
-        <Box sx={{ position: 'relative' }}>{renderImg}</Box>
-        <IconButton
-          sx={{
-            position: 'absolute',
-            top: 2,
-            right: 2,
-            width: '48px',
-            height: '48px',
-            mt: 0,
-          }}
-          onClick={onClickFavorite}
-        >
-          <Iconify
-            width={32}
-            icon={favorited ? 'mdi:heart' : 'mdi:heart-outline'}
-            color={favorited ? theme.palette.primary.main : 'white'}
-          />
-        </IconButton>
-        <Box
-          sx={{
-            p: 3,
-            display: 'flex',
-            flexDirection: 'column',
-          }}
-        >
-          <Typography variant="subtitle2" color="primary">
-            {fDate(releaseDate)}
-          </Typography>
-          <Typography variant="h6">{titleEN}</Typography>
+    <Card
+      sx={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column' }}
+      onClick={onMovieCardClick}
+    >
+      <Box sx={{ position: 'relative' }}>{renderImg}</Box>
+      <IconButton
+        sx={{
+          position: 'absolute',
+          top: 2,
+          right: 2,
+          width: '48px',
+          height: '48px',
+          mt: 0,
+        }}
+        onClick={(event) => {
+          event.stopPropagation();
+          onClickFavorite();
+        }}
+      >
+        <Iconify
+          width={32}
+          icon={favorited ? 'mdi:heart' : 'mdi:heart-outline'}
+          color={favorited ? theme.palette.primary.main : 'white'}
+        />
+      </IconButton>
+      <Box
+        sx={{
+          p: 3,
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
+        <Typography variant="subtitle2" color="primary">
+          {fDate(releaseDate)}
+        </Typography>
+        <Typography variant="h6">{titleEN}</Typography>
+      </Box>
+      <Box
+        sx={{
+          p: 3,
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'flex-end',
+          justifyContent: 'space-between',
+          marginTop: 'auto', // Pushes the box to the bottom
+        }}
+      >
+        <Box sx={{ display: 'flex', gap: '4px' }}>
+          <Chip label={genre[0]} variant="outlined" />
+          <Chip label={`${duration} mins`} variant="outlined" />
         </Box>
-        <Box
-          sx={{
-            p: 3,
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'flex-end',
-            justifyContent: 'space-between',
-            marginTop: 'auto', // Pushes the box to the bottom
-          }}
-        >
-          <Box sx={{ display: 'flex', gap: '4px' }}>
-            <Chip label={genre[0]} variant="outlined" />
-            <Chip label={`${duration} mins`} variant="outlined" />
-          </Box>
-        </Box>
-      </Card>
-    </Link>
+      </Box>
+    </Card>
   );
 };
 

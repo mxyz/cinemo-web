@@ -24,9 +24,9 @@ export default function Router() {
       children: [
         { element: <MoviesPage />, index: true },
         { path: 'my-favorite', element: <FavoritePage /> },
+        { path: 'movie/:id', element: <MovieDetailPage /> },
       ],
     },
-    { path: 'movie/:id', element: <MovieDetailPage /> },
     {
       path: 'login',
       element: <LoginPage />,

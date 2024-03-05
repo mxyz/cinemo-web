@@ -3,11 +3,13 @@ import { createSlice } from '@reduxjs/toolkit';
 import { account } from 'src/_mock/account';
 
 
+const accountFromSessionStorage = JSON.parse(sessionStorage.getItem('account')) || [];
+
 const initialState = {
-  email: '',
+  email: accountFromSessionStorage.email || '',
   favorited: [],
-  displayName: undefined,
-  imageUrl: '',
+  displayName: accountFromSessionStorage.displayName || '',
+  imageUrl: accountFromSessionStorage.imageUrl || '',
 };
 
 export const AccountSlice = createSlice({
@@ -19,8 +21,13 @@ export const AccountSlice = createSlice({
       state.displayName = account.displayName;
       state.imageUrl = account.photoURL
     },
-    onRemoveAccount: () => initialState,
-  },
+    onRemoveAccount: () => ({
+      email:  '',
+      favorited: [],
+      displayName:  '',
+      imageUrl:  '',
+    }),
+  }
 });
 
 const accountReducer = AccountSlice.reducer;
