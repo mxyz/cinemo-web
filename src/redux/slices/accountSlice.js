@@ -7,7 +7,6 @@ const accountFromSessionStorage = JSON.parse(sessionStorage.getItem('account')) 
 
 const initialState = {
   email: accountFromSessionStorage.email || '',
-  favorited: [],
   displayName: accountFromSessionStorage.displayName || '',
   imageUrl: accountFromSessionStorage.imageUrl || '',
 };
@@ -23,7 +22,6 @@ export const AccountSlice = createSlice({
     },
     onRemoveAccount: () => ({
       email:  '',
-      favorited: [],
       displayName:  '',
       imageUrl:  '',
     }),
