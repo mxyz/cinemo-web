@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
+import { useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
 
 import { fDate } from 'src/utils/format-time';
 
@@ -21,15 +23,10 @@ export default function MovieTitleAndBanner({
   favorited,
   onToggleFavoriteMovieId,
 }) {
+  const theme = useTheme();
   return (
     <Box sx={{ display: 'flex', gap: '16px', minHeight: '300px' }}>
-      <Box
-        sx={{
-          position: 'relative',
-          width: '200px',
-          overflow: 'hidden',
-        }}
-      >
+      <Box borderRadius="10px" position="relative" width="200px" overflow="hidden">
         <img
           alt={titleEN}
           src={posterImageUrl}
@@ -41,7 +38,27 @@ export default function MovieTitleAndBanner({
           }}
         />
       </Box>
-      <Stack>
+      <Stack width="100%" spaceing={1} position="relative">
+        <IconButton
+          sx={{
+            position: 'absolute',
+            top: 0,
+            right: 0,
+            width: '48px',
+            height: '48px',
+            mt: 0,
+          }}
+          onClick={(event) => {
+            event.stopPropagation();
+            onToggleFavoriteMovieId();
+          }}
+        >
+          <Iconify
+            width={32}
+            icon={favorited ? 'mdi:heart' : 'mdi:heart-outline'}
+            color={favorited ? theme.palette.primary.main : 'black'}
+          />
+        </IconButton>
         <Typography variant="subtitle2" color="primary">
           {fDate(releaseDate)}
         </Typography>
@@ -52,7 +69,7 @@ export default function MovieTitleAndBanner({
           <Iconify width={24} icon="mdi:clock-time-four-outline" color="black" />
           <Typography variant="subtitle2">{duration} mins</Typography>
         </Box>
-        <Button sx={{ marginTop: 'auto' }} variant="contained">
+        <Button sx={{ marginTop: 'auto', maxWidth: '200px' }} variant="contained">
           See Showtime
         </Button>
       </Stack>

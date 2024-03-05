@@ -57,7 +57,13 @@ const MovieCard = ({
 
   return (
     <Card
-      sx={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column' }}
+      sx={{
+        width: '100%',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        cursor: 'pointer',
+      }}
       onClick={onMovieCardClick}
     >
       <Box sx={{ position: 'relative' }}>{renderImg}</Box>

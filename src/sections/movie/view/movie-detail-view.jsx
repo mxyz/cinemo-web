@@ -23,7 +23,7 @@ export default function MovieDetailView({ movie, onToggleFavoriteMovieId }) {
           posterImageUrl={movie.posterImageUrl}
           releaseDate={movie.releaseDate}
           favorited={movie.favorited}
-          onToggleFavoriteMovieId={onToggleFavoriteMovieId}
+          onToggleFavoriteMovieId={() => onToggleFavoriteMovieId(movie.id)}
         />
         <MovieInformation
           actors={movie.actors}
