@@ -54,3 +54,18 @@ export const getMovies = (state) => state.movies.movies;
 export const getFavoritedMovieIds = (state) => state.movies.favorited;
 
 export const getFavoritedMovies = (state)=> state.movies.movies.filter(movie=>state.movies.favorited.includes(movie.id));
+
+export const getMovieById = (id) => (state) => {
+  if (!state || !state.movies || !state.movies.movies) {
+    console.error('Invalid state or movie data');
+    return null;
+  }
+
+  const movie = state.movies.movies.find(_movie => _movie.id === id);
+  
+  if (!movie) {
+    console.warn(`Movie with id ${id} not found`);
+  }
+
+  return movie;
+};
