@@ -23,6 +23,7 @@ const useGetMovies = () => {
         titleTH: movie.title_th,
         synopsisEN: movie.synopsis_en,
         synopsisTH: movie.synopsis_th,
+        rating: movie.rating,
         genre: movie.genre.split('/'),
         actors: movie.actor,
         director: movie.director,
