@@ -1,3 +1,6 @@
+
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { enqueueSnackbar } from 'notistack';
 import { useMemo, useEffect, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -37,11 +40,13 @@ const useAuth = () =>{
 
     const onLogin = useCallback(async ({email})=>{
         await dispatch(onSetAccount({email}));
+        enqueueSnackbar("Login success", {variant: 'success'});
     },[dispatch])
 
     const onLogout = useCallback(()=>{
         dispatch(onRemoveAccount());
         sessionStorage.removeItem('account');
+        enqueueSnackbar("Logout success", {variant: 'success'});
     },[dispatch])
 
     return {

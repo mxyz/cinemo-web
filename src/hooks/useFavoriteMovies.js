@@ -1,22 +1,26 @@
-import { useMemo, useCallback } from 'react'
+import { useCallback } from 'react'
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { enqueueSnackbar } from 'notistack';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { getFavoritedMovieIds, toggleFavoriteMovieId } from 'src/redux/slices/movieSlice';
 
 const useFavoriteMovies = () =>{
     const favoritedMovieIds = useSelector(getFavoritedMovieIds);
-    const sessionFavoritedMovieIds = sessionStorage.getItem('favoritedMovieId');
     const dispatch = useDispatch();
-
-    const _favoritedMovieIds = useMemo(()=>sessionFavoritedMovieIds || favoritedMovieIds,[favoritedMovieIds, sessionFavoritedMovieIds]);
 
     const onToggleFavoriteMovieId = useCallback((movieId)=>{
         dispatch(toggleFavoriteMovieId(movieId));
-    },[dispatch])
+        if(favoritedMovieIds.includes(movieId)) {
+            enqueueSnackbar('Removed from favorite', { variant: 'error' });
+        } else {
+            enqueueSnackbar('Added to favorite', { variant: 'success' });
+        }
+    },[dispatch, favoritedMovieIds])
 
     return {
         onToggleFavoriteMovieId,
-        _favoritedMovieIds,
+        favoritedMovieIds,
     }
 }
 

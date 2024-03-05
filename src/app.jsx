@@ -1,3 +1,6 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { SnackbarProvider } from 'notistack';
+
 import useGetMovies from 'src/api/useGetMovies';
 
 import Router from 'src/routes/sections';
@@ -16,6 +19,11 @@ export default function App() {
 
   return (
     <ThemeProvider>
+      <SnackbarProvider
+        maxSnack={3}
+        autoHideDuration={5000}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+      />
       <Router />
     </ThemeProvider>
   );
