@@ -14,7 +14,7 @@ const navConfig = [
   },
   {
     title: 'My Favorite',
-    path: '/user',
+    path: '/my-favorite',
     icon: icon('ic_user'),
   },
 ];
