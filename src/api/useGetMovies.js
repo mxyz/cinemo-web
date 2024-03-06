@@ -1,12 +1,14 @@
 import useAxios from 'axios-hooks';
 import { useDispatch } from 'react-redux';
-import { useEffect, useCallback } from 'react';
+import { useMemo, useEffect, useCallback } from 'react';
 
 import { addMovies } from 'src/redux/slices/movieSlice';
 
 const useGetMovies = () => {
   const sessionFavoritedMovieIds = sessionStorage.getItem('favoritedMovieId');
   const dispatch = useDispatch();
+
+  const _sessionFavoritedMovieIds = useMemo(()=>sessionFavoritedMovieIds || [],[sessionFavoritedMovieIds])
 
   const [{ data, loading }, refetch] = useAxios({
     url: 'https://www.majorcineplex.com/apis/get_movie_avaiable',
@@ -28,11 +30,11 @@ const useGetMovies = () => {
         bannerImageUrl: movie.widescreen_url,
         posterImageUrl: movie.poster_url,
         releaseDate: movie.release_date,
-        favorited: sessionFavoritedMovieIds.includes(movie.id) || false,
+        favorited: _sessionFavoritedMovieIds.includes(movie.id) || false,
       }));
     }
     return undefined;
-  }, [sessionFavoritedMovieIds]);
+  }, [_sessionFavoritedMovieIds]);
 
   useEffect(() => {
     if (data) {
