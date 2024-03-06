@@ -38,8 +38,8 @@ const useAuth = () =>{
 
     
 
-    const onLogin = useCallback(async ({email})=>{
-        await dispatch(onSetAccount({email}));
+    const onLogin = useCallback(({email})=>{
+        dispatch(onSetAccount({email}));
         enqueueSnackbar("Login success", {variant: 'success'});
     },[dispatch])
 
