@@ -52,6 +52,8 @@ export const { addMovies, toggleFavoriteMovieId } = MovieSlice.actions;
 
 export const getMovies = (state) => state.movies.movies;
 
+export const getIsHasMovies = (state)=> !!(state.movies?.movies?.length > 0);
+
 export const getFavoritedMovieIds = (state) => state.movies.favorited;
 
 export const getFavoritedMovies = (state)=> state.movies.movies.filter(movie=>state.movies.favorited.includes(movie.id));

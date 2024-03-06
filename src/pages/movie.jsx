@@ -7,28 +7,30 @@ import useGetMovies from 'src/api/useGetMovies';
 
 import useFavoriteMovies from 'src/hooks/useFavoriteMovies';
 
-import { MovieDetailView } from 'src/sections/movie/view';
+import { MovieDetailView, NotFoundMovieDetail } from 'src/sections/movie/view';
 
-import { getMovieById } from 'src/redux/slices/movieSlice';
+import { getMovieById, getIsHasMovies } from 'src/redux/slices/movieSlice';
 
 export default function MovieDetailPage() {
   const { id } = useParams(); // Get the id parameter from the URL
   const movieDetail = useSelector(getMovieById(id));
+  const isHasMovies = useSelector(getIsHasMovies);
   const { refetch } = useGetMovies();
   const { onToggleFavoriteMovieId } = useFavoriteMovies();
-  console.log('movie detail', movieDetail, id);
   useEffect(() => {
-    if (!movieDetail) {
+    if (!movieDetail && !isHasMovies) {
       refetch();
     }
-  }, [movieDetail, refetch]);
+  }, [isHasMovies, movieDetail, refetch]);
   return (
     <>
       <Helmet>
         <title> Movie | Minimal UI </title>
       </Helmet>
 
-      {movieDetail && (
+      {!movieDetail && isHasMovies && <NotFoundMovieDetail />}
+
+      {movieDetail && isHasMovies && (
         <MovieDetailView movie={movieDetail} onToggleFavoriteMovieId={onToggleFavoriteMovieId} />
       )}
     </>
