@@ -26,7 +26,7 @@ export default function MovieTitleAndBanner({
   const theme = useTheme();
   return (
     <Box sx={{ display: 'flex', gap: '16px', minHeight: '300px' }}>
-      <Box borderRadius="10px" position="relative" width="200px" overflow="hidden">
+      <Box position="relative" width="200px" overflow="hidden">
         <img
           alt={titleEN}
           src={posterImageUrl}
@@ -35,6 +35,7 @@ export default function MovieTitleAndBanner({
             top: 0,
             left: 0,
             objectFit: 'cover',
+            borderRadius: '10px',
           }}
         />
       </Box>
