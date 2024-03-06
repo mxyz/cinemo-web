@@ -29,3 +29,9 @@ This is a React.js project scaffolded with Vite and managed with Yarn.
    ```
 
 5. **Open your browser and navigate to [http://localhost:3030](http://localhost:3030) to view the application.**
+
+6. **Install the "Allow CORS: Access-Control-Allow-Origin" Chrome Extension:**
+
+   Before using certain features, you may need to install the "Allow CORS: Access-Control-Allow-Origin" extension for your browser. This extension allows you to bypass CORS restrictions during development.
+
+   You can install the extension from the [Chrome Web Store](https://chrome.google.com/webstore/detail/allow-cors-access-control/lhobafahddgcelffkeicbaginigeejlf?hl=en).
