@@ -6,10 +6,7 @@ import { addMovies } from 'src/redux/slices/movieSlice';
 
 const useGetMovies = () => {
   const sessionFavoritedMovieIds = sessionStorage.getItem('favoritedMovieId');
-  console.log(sessionFavoritedMovieIds)
   const dispatch = useDispatch();
-
-  console.log(sessionFavoritedMovieIds);
 
   const [{ data, loading }, refetch] = useAxios({
     url: 'https://www.majorcineplex.com/apis/get_movie_avaiable',

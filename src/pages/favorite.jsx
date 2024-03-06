@@ -14,7 +14,6 @@ export default function FavoritePage() {
   const movies = useSelector(getFavoritedMovies);
   const { onToggleFavoriteMovieId } = useFavoriteMovies();
   const { refetch } = useGetMovies();
-  console.log(movies);
   useEffect(() => {
     if (!movies) {
       refetch?.();

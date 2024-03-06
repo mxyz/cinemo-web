@@ -11,7 +11,6 @@ import { getMovies } from 'src/redux/slices/movieSlice';
 export default function MoviesPage() {
   const movies = useSelector(getMovies);
   const { onToggleFavoriteMovieId } = useFavoriteMovies();
-  console.log('store movies', movies);
   return (
     <>
       <Helmet>

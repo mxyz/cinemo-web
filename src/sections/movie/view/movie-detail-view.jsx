@@ -10,7 +10,6 @@ import MovieTitleAndBanner from '../movie-title-banner';
 // ----------------------------------------------------------------------
 
 export default function MovieDetailView({ movie, onToggleFavoriteMovieId }) {
-  console.log(movie, onToggleFavoriteMovieId);
   return (
     <Container>
       <Stack spacing={4}>

@@ -12,7 +12,6 @@ export const MovieSlice = createSlice({
   },
   reducers: {
     addMovies: (state, action) => {
-      console.log('movies added')
       state.movies = action.payload;
     },
     toggleFavoriteMovieId: (state, action) => {
@@ -63,7 +62,6 @@ export const getMovieById = (id) => (state) => {
     console.error('Invalid state or movie data');
     return null;
   }
-  console.log(state)
 
   const movie = state.movies.movies.find(_movie => _movie.id === id);
   
