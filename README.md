@@ -28,4 +28,4 @@ This is a React.js project scaffolded with Vite and managed with Yarn.
    yarn dev
    ```
 
-5. **Open your browser and navigate to [http://localhost:3000](http://localhost:3000) to view the application.**
+5. **Open your browser and navigate to [http://localhost:3030](http://localhost:3030) to view the application.**
